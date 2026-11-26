@@ -24,7 +24,8 @@ int port = builder.Configuration.GetValue<int?>("Port") ?? 0;
 var share = Netzwerkzugang.Lesen(builder.Configuration);
 builder.WebHost.ConfigureKestrel(k =>
 {
-    k.Listen(IPAddress.Loopback, port);
+    // Inside a container, loopback is unreachable from outside. Docker publishes the port on the host's 127.0.0.1 only.
+    k.Listen(builder.Configuration.GetValue<bool>("BindAny") ? IPAddress.Any : IPAddress.Loopback, port);
     if (share != null)
         k.Listen(share.Adresse, share.Url.Port, endpoint => endpoint.UseHttps(share.Zertifikat, share.Passwort));
     k.Limits.MaxRequestBodySize = 64 * 1024;

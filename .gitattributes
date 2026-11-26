@@ -8,3 +8,5 @@
 *.cmd text eol=crlf
 *.sln text eol=crlf
 *.sqlite3 binary
+*.sh text eol=lf
+Dockerfile text eol=lf

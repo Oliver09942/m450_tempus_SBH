@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - run: dotnet build Tempus.sln -c Release
+
+  docker-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare the data directory
+        # The container runs as the non-root "app" user; on Linux the bind mount keeps host ownership.
+        run: mkdir -p Daten && chmod 777 Daten
+      - name: Build and start the container
+        run: docker compose up --build -d tempus
+      - name: Wait for the app
+        run: |
+          for i in $(seq 1 30); do
+            curl -fs -o /dev/null http://127.0.0.1:5184/ && exit 0
+            sleep 2
+          done
+          docker compose logs tempus
+          exit 1
+      - name: Log in with the demo account
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' \
+            -H 'X-Tempus: 1' -H 'Content-Type: application/json' \
+            -d '{"login":"nora","password":"Tempus-Demo26!"}' \
+            http://127.0.0.1:5184/api/login)
+          test "$code" = 204
+      - name: Build the Windows package
+        run: |
+          docker compose run --rm --build paket
+          unzip -l artifacts/Tempus_Windows_und_Quellcode.zip | grep -q Programm/Tempus.exe
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs tempus
