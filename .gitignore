@@ -1,0 +1,26 @@
+# Lokale IDE- und Build-Ausgaben
+.vs/
+.idea/
+bin/
+obj/
+*.suo
+*.user
+*.csproj.user
+TestResults/
+artifacts/
+# Persönliche Arbeitsdaten und lokale Einstellungen
+Daten/
+Testdaten/
+*.sqlite3
+*.sqlite3-*
+!Demodaten/tempus.sqlite3
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+
+# Lokale Zertifikate und private Schlüssel
+*.pfx
+*.p12
+*.key

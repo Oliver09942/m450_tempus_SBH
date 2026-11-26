@@ -1,0 +1,5 @@
+.NET Runtime und ASP.NET Core: Microsoft Corporation und Mitwirkende, MIT.
+Microsoft.Data.Sqlite: Microsoft Corporation, MIT.
+Dapper: Copyright 2019 Stack Exchange, Inc., Apache License 2.0.
+SQLitePCLRaw: Copyright 2014–2024 SourceGear, LLC, Apache License 2.0.
+SQLite: Public Domain.

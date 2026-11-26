@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de-CH">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#163e36" />
+    <title>Tempus · Zeiterfassung</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/tempus.css" />
+    <script type="module" src="/tempus.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="notice" role="status" aria-live="polite"></div>
+    <dialog id="dialog">
+      <form id="editor">
+        <div class="dialog-title">
+          <h2></h2>
+          <button type="button" data-action="dismiss" aria-label="Schliessen">
+            ×
+          </button>
+        </div>
+        <div id="fields"></div>
+        <p id="formerror" role="alert"></p>
+        <footer>
+          <button type="button" data-action="dismiss">Abbrechen</button
+          ><button id="submit" class="primary">Speichern</button>
+        </footer>
+      </form>
+    </dialog>
+  </body>
+</html>
