@@ -1,0 +1,20 @@
+services:
+  tempus:
+    build:
+      context: .
+      target: runtime
+    ports:
+      # Reachable from this machine only; the app only accepts the Host header 127.0.0.1.
+      - "127.0.0.1:5184:5184"
+    volumes:
+      - ./Daten:/daten
+    restart: unless-stopped
+
+  # Build the Windows package: docker compose run --rm paket
+  paket:
+    profiles: ["paket"]
+    build:
+      context: .
+      target: paket
+    volumes:
+      - .:/repo

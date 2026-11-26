@@ -1,0 +1,11 @@
+.git
+.vs
+**/bin
+**/obj
+Daten
+Testdaten
+artifacts
+*.pfx
+*.p12
+*.key
+.env*
