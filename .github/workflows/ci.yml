@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Prepare the data directory
+        # The container runs as the non-root "app" user; on Linux the bind mount keeps host ownership.
+        run: mkdir -p Daten && chmod 777 Daten
       - name: Build and start the container
         run: docker compose up --build -d tempus
       - name: Wait for the app
